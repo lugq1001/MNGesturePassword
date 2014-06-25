@@ -1,4 +1,4 @@
 MNGesturesLock
 ==============
 
-手势密码解锁 
+A GesturesLock View for iOS incloudes lock&unlock

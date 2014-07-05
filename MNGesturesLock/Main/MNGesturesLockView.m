@@ -9,6 +9,7 @@
 #import "MNGesturesLockView.h"
 #import "MNGesturesLockConfig.h"
 #import "MNGesturesLockPoint.h"
+#import "MNGesturesLockDelegate.h"
 
 typedef NS_ENUM(NSInteger, MNGesturesState)
 {
@@ -114,8 +115,8 @@ typedef NS_ENUM(NSInteger, MNGesturesState)
         return;
     [self resetPoints];
     [self setNeedsDisplay];
-    //if([_gestureLockDelegate respondsToSelector:@selector(didGestureLockCompleted:)])
-      //  [_gestureLockDelegate didGestureLockCompleted:lockPassword];
+    if([self.delegate respondsToSelector:@selector(didGesturesPasswordCompleted:)])
+        [self.delegate didGesturesPasswordCompleted:self.password];
 }
 
 #pragma mark -private method
@@ -186,6 +187,29 @@ typedef NS_ENUM(NSInteger, MNGesturesState)
     }
     self.lineX = self.lineY = -1;
     self.state = MNGesturesStateNormal;
+}
+
+- (void)passwordErrored
+{
+    self.userInteractionEnabled = NO;
+    self.state = MNGesturesStateError;
+    NSUInteger length = [self.password length];
+    for (int i=0;i<length;i++) {
+        NSInteger ID = [self.password characterAtIndex:i] - 48;
+        [self.points[ID] setTouchError:YES];
+        if(i + 1 < [self.password length]) {
+            [self.points[ID] setNextID:[self.password characterAtIndex:i + 1] - 48];
+        }
+    }
+    [self setNeedsDisplay];
+    [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(drawErrorCompleted:)userInfo:nil repeats:NO];
+}
+
+- (void)drawErrorCompleted:(NSTimer *)timer
+{
+    [self resetPoints];
+    [self setNeedsDisplay];
+    self.userInteractionEnabled = YES;
 }
 
 

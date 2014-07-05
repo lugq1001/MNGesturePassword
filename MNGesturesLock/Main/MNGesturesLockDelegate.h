@@ -8,25 +8,17 @@
 
 /**
  *  @class MNGesturesLockDelegate
- *  @brief 手势密码委托
+ *  @brief 手势密码协议
  */
 @protocol MNGesturesLockDelegate <NSObject>
 
-@optional
+@required
 
 /**
  *  手势轨迹绘制完成
  *
- *  @param gesturePassword <#gesturePassword description#>
+ *  @param gesturePassword 手势密码
  */
-- (void)didGestureLockCompleted:(NSString *)gesturePassword;
-
-
-/**
- *  手势密码错误
- *
- *  @param gesturePassword <#gesturePassword description#>
- */
-- (void)afterGestureLockError:(NSString *)gesturePassword;
+- (void)didGesturesPasswordCompleted:(NSString *)gesturePassword;
 
 @end

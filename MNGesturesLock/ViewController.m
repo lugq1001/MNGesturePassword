@@ -9,9 +9,11 @@
 #import "ViewController.h"
 #import "MNGesturesLockView.h"
 #import "MNGesturesLockConfig.h"
+#import "MNGesturesLockDelegate.h"
 
-@interface ViewController ()
-            
+@interface ViewController () <MNGesturesLockDelegate>
+
+@property (nonatomic, strong) MNGesturesLockView *gesturesView;
 
 @end
 
@@ -19,8 +21,14 @@
             
 - (void)viewDidLoad {
     [super viewDidLoad];
-    MNGesturesLockView *view = [[MNGesturesLockView alloc] initWithConfig:[MNGesturesLockConfig defaults]];
-    [self.view addSubview:view];
+    self.gesturesView = [[MNGesturesLockView alloc] initWithConfig:[MNGesturesLockConfig defaults]];
+    self.gesturesView.delegate = self;
+    [self.view addSubview:self.gesturesView];
+}
+
+- (void)didGesturesPasswordCompleted:(NSString *)gesturePassword
+{
+    [self.gesturesView passwordErrored];
 }
 
 @end

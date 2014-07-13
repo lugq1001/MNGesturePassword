@@ -28,7 +28,11 @@
 
 - (void)didGesturesPasswordCompleted:(NSString *)gesturePassword
 {
-    [self.gesturesView passwordErrored];
+    if ([gesturePassword isEqualToString:@"your password"]) {
+        // handle logic
+    } else {
+        [self.gesturesView passwordErrored];
+    }
 }
 
 @end

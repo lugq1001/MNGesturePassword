@@ -1,7 +1,7 @@
 MNGesturesLock
 ==============
 
-A GesturesLock View for iOS incloudes lock&unlock
+A GesturesLock View for iOS includes lock&unlock
 
 ## Usage
 

@@ -189,21 +189,7 @@ typedef NS_ENUM(NSInteger, MNGesturesState)
     self.state = MNGesturesStateNormal;
 }
 
-- (void)passwordErrored
-{
-    self.userInteractionEnabled = NO;
-    self.state = MNGesturesStateError;
-    NSUInteger length = [self.password length];
-    for (int i=0;i<length;i++) {
-        NSInteger ID = [self.password characterAtIndex:i] - 48;
-        [self.points[ID] setTouchError:YES];
-        if(i + 1 < [self.password length]) {
-            [self.points[ID] setNextID:[self.password characterAtIndex:i + 1] - 48];
-        }
-    }
-    [self setNeedsDisplay];
-    [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(drawErrorCompleted:)userInfo:nil repeats:NO];
-}
+ 
 
 - (void)drawErrorCompleted:(NSTimer *)timer
 {
